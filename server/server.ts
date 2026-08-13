@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
@@ -12,14 +14,13 @@ import type { Settings } from "../src/types/Settings";
 const DEBUG_AUTOFILL_PLAYERS = false;
 
 const app = express();
+app.use(express.static(path.join(process.cwd(), "..", "dist")));
 
 const httpServer = http.createServer(app);
 
-const io = new Server(httpServer, {
-    cors: {
-        origin: "http://localhost:5173"
-    }
-});
+const PORT = process.env.PORT || 3001;
+
+const io = new Server(httpServer);
 
 const games = new Map<string, Game>();
 const playerGames = new Map<string, string>();
@@ -441,6 +442,6 @@ io.on("connection", socket => {
 
 });
 
-httpServer.listen(3001, () => {
-    console.log("Listening on 3001");
+httpServer.listen(PORT, "0.0.0.0", () => {
+    console.log(`Listening on ${PORT}`);
 });
