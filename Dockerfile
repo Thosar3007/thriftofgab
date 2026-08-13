@@ -19,4 +19,4 @@ RUN npm run build
 # Fly will provide PORT
 EXPOSE 8080
 
-CMD ["npx", "tsx", "server/server.ts"]
+CMD ["sh", "-c", "cd server && npx tsx server.ts"]
