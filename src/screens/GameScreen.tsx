@@ -10,6 +10,7 @@ import { getPlayer } from "../game/getPlayer.ts";
 import CurrentScores from "../components/CurrentScores.tsx";
 import PokeButton from "../components/PokeButton.tsx";
 import { passAnswer, scoreRound, continueGame } from "../game/GameClient.ts";
+import Panel from "../components/Panel.tsx";
 
 interface Props {
     game: Game;
@@ -73,7 +74,10 @@ export default function GameScreen({game, playerId, statusMessage, setStatusMess
     return (
         <div className="flex h-full min-h-0 flex-col p-3 gap-1">
             <div className="flex h-[18vh] min-h-[8rem] max-h-[12rem] gap-10 px-10">
-                <div className="flex h-[8rem] max-h-full self-center items-center justify-center"><Badge player={clueGiver}/></div>
+                <div className="flex flex-col h-[8rem] max-h-full self-center items-center justify-center gap-1">
+                    <div className="text-xl color-dark font-bold underline">Clue Giver</div>
+                    <Badge player={clueGiver}/>
+                </div>
                 <div className="flex min-h-0 grow-5"><ClueOutputZone game={game} /></div>
                 {game.settings.useTypedGuesses ? <div className="flex min-h-0 grow-1"><GuessList round={game.currentRound} /></div> : ""}
             </div>
@@ -107,9 +111,9 @@ export default function GameScreen({game, playerId, statusMessage, setStatusMess
                     setStatusMessage={setStatusMessage}
                 />}
                 {statusMessage ? 
-                    <div className="p-3">
+                    <Panel>
                         {statusMessage}
-                    </div>
+                    </Panel>
                 : <div></div>}
             </div>
             <div className="flex p-3 h-fit justify-center">

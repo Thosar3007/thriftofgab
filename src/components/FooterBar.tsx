@@ -91,7 +91,7 @@ export default function FooterBar({game}: FooterBarProps) {
 
     return (
 
-        <div className="flex items-center justify-center rounded-lg border border-gold bg-gradient-to-r from-light via-dark to-light shadow-md shadow-slate-900/15 tracking-wide mt-auto gap-4 text-gold">
+        <div className="flex flex-col md:flex-row text-center items-center justify-center rounded-lg border border-gold bg-gradient-to-r from-light via-dark to-light shadow-md shadow-slate-900/15 tracking-wide mt-auto gap-0 md:gap-4 text-gold">
             <div 
                 className="hover:underline cursor-pointer" 
                 onClick={()=>{
@@ -101,7 +101,7 @@ export default function FooterBar({game}: FooterBarProps) {
                 >
                     Something broken? Tell Thosar!
             </div>
-            <div>-</div>
+            <div className="border-gold h-0 w-[80vw] border-1 my-1 md:w-3"></div>
             <div 
                 className="hover:underline cursor-pointer" 
                 onClick={()=>{
@@ -111,17 +111,17 @@ export default function FooterBar({game}: FooterBarProps) {
                 >
                     Having fun? Support the Game!
             </div>
-            {showBugReport && <div className="fixed inset-0 m-[10vh_10vw] w-auto h-auto flex items-center justify-center text-center border-5 border-dark rounded-lg bg-dark">
+            {showBugReport && <div className="fixed inset-0 md:m-[10vh_10vw] w-auto h-auto flex items-center justify-center text-center border-5 border-dark rounded-lg bg-dark">
                 <form onSubmit={handleBugSubmit} className="w-full h-full flex flex-col p-3 border border-dark rounded-lg bg-background text-dark ">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-2xl underline">
+                        <h2 className="text-xl md:text-2xl underline">
                             Report a Bug
                         </h2>
 
                         <button
                             type="button"
                             onClick={() => setShowBugReport(false)}
-                            className="cursor-pointer m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold"
+                            className="cursor-pointer md:m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold text-sm h-10 md:text-base md:h-auto"
                         >
                             Close
                         </button>
@@ -139,7 +139,7 @@ export default function FooterBar({game}: FooterBarProps) {
                                 value={bugDescription}
                                 onChange={(e) => setBugDescription(e.target.value)}
                                 placeholder="Tell me what went wrong..."
-                                className="w-full min-h-32 rounded-lg border border-dark bg-white p-3 text-black resize-y"
+                                className="w-full md:min-h-32 rounded-lg border border-dark bg-white p-3 text-black resize-y"
                                 required
                             />
                         </div>
@@ -154,7 +154,7 @@ export default function FooterBar({game}: FooterBarProps) {
                                 value={bugExpected}
                                 onChange={(e) => setBugExpected(e.target.value)}
                                 placeholder="What should have happened instead?"
-                                className="w-full min-h-24 rounded-lg border border-dark bg-white p-3 text-black resize-y"
+                                className="w-full md:min-h-24 rounded-lg border border-dark bg-white p-3 text-black resize-y"
                             />
                         </div>
 
@@ -168,7 +168,7 @@ export default function FooterBar({game}: FooterBarProps) {
                                 value={bugAdditional}
                                 onChange={(e) => setBugAdditional(e.target.value)}
                                 placeholder="Anything else that might help?"
-                                className="w-full min-h-24 rounded-lg border border-dark bg-white p-3 text-black resize-y"
+                                className="w-full md:min-h-24 rounded-lg border border-dark bg-white p-3 text-black resize-y"
                             />
                         </div>
 
@@ -189,7 +189,7 @@ export default function FooterBar({game}: FooterBarProps) {
 
                     </div>
 
-                    <div className="flex justify-end gap-4 mt-3">
+                    <div className="flex justify-center md:justify-end gap-0 md:gap-4 mt-3 items-center">
                         {submitError && (
                             <div className="text-red-400 text-center">
                                 {submitError}
@@ -198,14 +198,14 @@ export default function FooterBar({game}: FooterBarProps) {
                         <button
                             type="button"
                             onClick={() => setShowBugReport(false)}
-                            className="cursor-pointer m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold"
+                            className="cursor-pointer m-1 md:m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold text-sm h-10 md:text-base md:h-auto"
                         >
                             Cancel
                         </button>
 
                         <button
                             type="submit"
-                            className="cursor-pointer m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold"
+                            className="cursor-pointer m-1 md:m-2 border border-dark bg-gold border rounded-full pt-2  pb-2.25 px-4 font-bold text-sm h-10 md:text-base md:h-auto"
                             disabled={isSubmitting || !bugDescription.trim()}
                         >
                             {isSubmitting ? "Sending..." : "Submit Bug Report"}
@@ -213,40 +213,41 @@ export default function FooterBar({game}: FooterBarProps) {
                     </div>
                 </form>
             </div>}
-            {showDonate && <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
-                <div className="w-auto h-auto flex flex-col p-3 border-5 border-gold rounded-lg bg-dark text-white font-bold">
+            {showDonate && <div className="fixed inset-0 top-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:h-min flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
+                <div className="w-auto h-full md:h-min flex flex-col p-3 border-5 border-gold rounded-lg bg-dark text-white font-bold justify-center">
                     <div className="flex flex-col items-center justify-between gap-2">
 
-                        <div className="grid grid-cols-[1fr_2fr_1fr] justify-between align-center gap-2">
-                            <img className="flex w" src={avatarGif} />
-                            <div className="flex flex-col gap-2 items-center">
+                        <div className="flex flex-col md:grid md:grid-cols-[1fr_2fr] justify-between align-center gap-2">
+                            <img className="flex order-2 md:order-1" src={avatarGif} />
+                            <div className="flex flex-col gap-2 items-center justify-center order-1 md:order-2">
                                 <p>
                                     Having fun with Thrift of Gab?
                                 </p>
                                 <p>
                                     Thosar accepts cookies.
                                 </p>
-                                <button
-                                    type="button"
-                                    onClick={() => window.open("https://ko-fi.com/thosar", "_blank")}
-                                    className="cursor-pointer flex w-auto m-2 border border-gold bg-dark border-2 rounded-full pt-2  pb-2.25 px-4 font-bold"
-                                >
-                                    Buy Thosar a Cookie
-                                </button>
-                            </div>
-                            <div className="flex items-start justify-end pr-2">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowDonate(false)}
-                                    className="cursor-pointer flex w-auto m-2 border border-gold bg-dark border-2 rounded-full pt-1.75  pb-2 px-3.5 font-bold"
-                                >
-                                    Close
-                                </button>
                             </div>
                         </div>
                         <p>
                             No pressure! Playing the game is already appreciated!
                         </p>
+                        <div className="flex flex-col md:flex-row items-center justify-center order-3 md:items-start md:justify-end pr-2">
+                            <button
+                                type="button"
+                                onClick={() => window.open("https://ko-fi.com/thosar", "_blank")}
+                                className="cursor-pointer flex w-auto m-2 border border-gold bg-dark border-2 rounded-full pt-2  pb-2.25 px-4 font-bold"
+                            >
+                                Buy Thosar a Cookie
+                            </button>
+                        
+                            <button
+                                type="button"
+                                onClick={() => setShowDonate(false)}
+                                className="cursor-pointer flex w-auto m-2 border border-gold bg-dark border-2 rounded-full pt-1.75  pb-2 px-3.5 font-bold"
+                            >
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>}
