@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00B8C9;
+  --color-light: #20D6D7;
+  --color-dark: #00879A;
+
+  --color-gold: #F4C542;
+  --color-gold-light: #FFD966;
+  --color-gold-dark: #998922;
+
+  --color-navy: #1E3557;
+
+  --color-background: #F4F8FA;
+}
+
+@layer utilities {
+    .clip-path-score {
+        clip-path: polygon(
+            0 0,
+            90% 0,
+            100% 50%,
+            90% 100%,
+            0 100%
+        );
+    }
+
+    .clip-path-hex {
+
+        clip-path: polygon(
+            6% 0,
+            94% 0,
+            100% 50%,
+            94% 100%,
+            6% 100%,
+            0 50%
+        );
+
+    }
+
+}
