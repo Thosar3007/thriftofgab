@@ -17,8 +17,8 @@ export default function TitleBar({
                 {showHelp && <div className="z-20 inset-0 fixed top-0 w-auto h-auto md:h-min md:m-auto md:max-w-[90vw] flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
                     <div className="w-full md:w-auto h-full flex flex-col border-5 border-gold rounded-lg bg-dark text-white font-bold md:p-5">
                         <div className="flex flex-col h-full md:h-max items-center md:justify-between gap-1">
-                            <div className="flex flex-col gap-3 md:gap-4 items-center p-2 md:p-5 text-xs md:text-base">
-                                <p className="text-xl md:text-2xl underline">
+                            <div className="flex flex-col gap-1.5 md:gap-4 items-center px-2 py-1 md:p-5 text-xs md:text-base">
+                                <p className="text-lg md:text-2xl underline">
                                     To Play
                                 </p>
                                 <p>
@@ -34,11 +34,11 @@ export default function TitleBar({
                                     At the end of each Round, the Round is scored! Guessers get 1 point for each correct Answer they guessed, and Clue Givers get 1 point for each Blue slot left in their Clue Bank. Clue Givers can lose points if they start to fill the Red slots in their Clue Bank, so try to think of words that might be useful for a range of potential Answers. To get the most points, your Word Bank needs to be THRIFTY!!!
                                 </p>
                             </div>
-                            <div className="flex items-start justify-end pr-2">
+                            <div className="flex items-start justify-end">
                                 <button
                                     type="button"
                                     onClick={() => setShowHelp(false)}
-                                    className="cursor-pointer flex w-auto m-1 md:m-2 border border-gold bg-dark border-2 rounded-full pt-1.75  pb-2 px-3.5 font-bold"
+                                    className="cursor-pointer text-xs flex w-auto m-1 md:m-2 border border-gold bg-dark border-2 rounded-full pt-1  pb-1.5 px-3.5 font-bold md:text-lg md:pt-1.75 md:pb-2"
                                 >
                                     Let's Play!
                                 </button>

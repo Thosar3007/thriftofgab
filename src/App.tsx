@@ -87,11 +87,7 @@ function App() {
 
 
 return (
-<<<<<<< HEAD
     <div className="min-h-screen flex flex-col w-full justify-start pt-2 pb-4 px-5 bg-background text-navy">
-=======
-    <div className="h-screen max-h-screen flex flex-col w-full justify-start py-2 px-5 bg-background text-navy">
->>>>>>> 78328f8b91d2937789d53b527a02999a60242278
         <TitleBar title="Thrift of Gab" />
         {(!game) && <LandingScreen onHost={hostGame} onJoin={joinGame} />}
         {(game?.phase === "Lobby") && myPlayerId && <LobbyScreen game={game} playerId={myPlayerId} statusMessage={statusMessage} setStatusMessage={setStatusMessage} />}

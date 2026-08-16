@@ -67,24 +67,26 @@ export default function InputPanel({
     }
 
     return (
-        <Panel>
-            <div className="h-full grid grid-cols-[1fr_2fr_1fr] gap-2 items-center">
-                <div className="flex items-center justify-center">{isClueGiver && <PokeButton onClick={resetClueOutput}>Clue Reset!</PokeButton>}</div>
-                <input
-                    className="border-b border-1 rounded-lg p-2 bg-white"
-                    placeholder="Type here!"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            {(isClueGiver ? clickSubmitClue : clickSubmitGuess)()};
-                        }
-                    }}
-                />
-                <div className="flex items-center justify-center"><PokeButton onClick={isClueGiver ? clickSubmitClue : clickSubmitGuess}>
-                    {isClueGiver ? "Add Clue" : "Guess!"}
-                </PokeButton></div>
-            </div>
-        </Panel>
+        <div className="w-min">
+            <Panel>
+                <div className="h-full w-min flex flex-col gap-2 items-center justify-center md:flex-row">
+                    <div className="flex grow-1 items-center justify-center">{isClueGiver && <PokeButton onClick={resetClueOutput}>Clue Reset!</PokeButton>}</div>
+                    <input
+                        className="border-b border-1 rounded-lg p-2 bg-white grow-2"
+                        placeholder="Type here!"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                {(isClueGiver ? clickSubmitClue : clickSubmitGuess)()};
+                            }
+                        }}
+                    />
+                    <div className="flex grow-1 items-center justify-center"><PokeButton onClick={isClueGiver ? clickSubmitClue : clickSubmitGuess}>
+                        {isClueGiver ? "Add Clue" : "Guess!"}
+                    </PokeButton></div>
+                </div>
+            </Panel>
+        </div>
     );
 }

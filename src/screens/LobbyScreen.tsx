@@ -197,7 +197,7 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
             <div className="h-full md:row-span-3 md:col-span-2">
                 <Panel title="Settings">
                     <div className="flex flex-col justify-between w-full gap-2">
-                        <div className="flex gap-2 w-full">
+                        <div className="flex flex-col gap-2 w-full md:flex-row ">
                             <div className="flex flex-col flex-1 h-full justify-between">
                                 <div className="flex flex-col h-fit">
                                     <Panel title="Pokemon Categories">

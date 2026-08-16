@@ -111,7 +111,7 @@ export default function FooterBar({game}: FooterBarProps) {
                 >
                     Having fun? Support the Game!
             </div>
-            {showBugReport && <div className="fixed inset-0 md:m-[10vh_10vw] w-auto h-auto flex items-center justify-center text-center border-5 border-dark rounded-lg bg-dark">
+            {showBugReport && <div className="z-20 fixed inset-0 md:m-[10vh_10vw] w-auto h-auto flex items-center justify-center text-center border-5 border-dark rounded-lg bg-dark">
                 <form onSubmit={handleBugSubmit} className="w-full h-full flex flex-col p-3 border border-dark rounded-lg bg-background text-dark ">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-xl md:text-2xl underline">
@@ -213,7 +213,7 @@ export default function FooterBar({game}: FooterBarProps) {
                     </div>
                 </form>
             </div>}
-            {showDonate && <div className="fixed inset-0 top-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:h-min flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
+            {showDonate && <div className="z-20 fixed inset-0 top-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:h-min flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
                 <div className="w-auto h-full md:h-min flex flex-col p-3 border-5 border-gold rounded-lg bg-dark text-white font-bold justify-center">
                     <div className="flex flex-col items-center justify-between gap-2">
 

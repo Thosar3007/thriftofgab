@@ -47,8 +47,9 @@ export default function AnswerList({ game, isClueGiver, setStatusMessage }: Prop
     }
 
     return (
-        <Panel title="Answers">
+        <Panel>
             <div className="flex flex-col gap-2 w-full">
+                <div className="flex mx-auto font-bold"><span className="flex md:hidden">Current{`\u00A0`}</span>Answer<span className="hidden md:flex">s</span></div>
                 <div className="flex flex-col gap-2 w-full">
                     {rows.map((_, index) => {
 

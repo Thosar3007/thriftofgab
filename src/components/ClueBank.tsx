@@ -5,29 +5,15 @@ import ClueButton from "./ClueButton";
 
 interface Props {
     game: Game;
-    //engine: GameEngine;
-    //setGame: React.Dispatch<React.SetStateAction<Game>>;
     playerId: string;
     setStatusMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ClueBank({
     game,
-    //engine,
-    //setGame,
     playerId,
     setStatusMessage
 }: Props) {
-
-    // function clickClue(index: number) {
-    //     const result = selectClue(game, index);
-    //     if (!result.success) {
-    //         setStatusMessage(result.message ?? "");
-    //         return;
-    //     }
-    //     setStatusMessage("");
-    //     setGame({ ...game });
-    // }
 
     async function clickClue(index: number) {
 
@@ -53,10 +39,12 @@ export default function ClueBank({
 
     return (
         <Panel title="Clue Bank">
-            <div className="h-full w-full grid grid-flow-col grid-cols-4 grid-rows-10 gap-1 pb-2">
+            <div className="h-full w-full flex flex-col md:grid md:grid-flow-col md:grid-cols-4 md:grid-rows-10 gap-1 pb-2">
                 {rows.map((_, index) => {
 
                     const clue = clues[index];
+                    const length = clues.length + 2;
+                    const hidden = (length < index)
 
                     let state: "empty" | "filled" | "pass" | "selected" = "empty";
 
@@ -75,6 +63,7 @@ export default function ClueBank({
                             state={state}
                             clueGiver={clueGiver}
                             onClick={() => clickClue(index)}
+                            hideMobile={hidden}
                         />
                     );
                 })}

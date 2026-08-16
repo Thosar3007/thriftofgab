@@ -6,6 +6,7 @@ interface Props {
     state: "empty" | "filled" | "pass" | "selected";
     clueGiver: boolean;
     onClick:()=> void;
+    hideMobile: boolean;
 }
 
 export default function ClueButton({
@@ -13,7 +14,8 @@ export default function ClueButton({
     clue,
     state,
     clueGiver,
-    onClick
+    onClick,
+    hideMobile
 }: Props) {
 
     const getBackground = () => {
@@ -49,7 +51,7 @@ export default function ClueButton({
         textSize = "text-xs";
 
     return (
-        <div className="clip-path-hex flex items-center bg-black justify-center p-1 disabled:cursor-default">
+        <div className={`${hideMobile ? "hidden" : ""} clip-path-hex min-w-[60vw] md:min-w-auto md:flex items-center bg-black justify-center p-1 disabled:cursor-default`}>
             <button
                 type="button"
                 onClick={onClick}

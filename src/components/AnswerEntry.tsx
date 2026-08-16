@@ -24,7 +24,7 @@ export default function AnswerEntry({
         textSize = "text-sm";
 
     return (
-        <div className="clip-path-hex flex items-center bg-black justify-center p-1 w-full aspect-[9.5/1] disabled:cursor-default">
+        <div className={`${(answer==undefined || answer.guessed)? "hidden" : ""} clip-path-hex md:flex items-center bg-black justify-center p-1 w-full aspect-[9.5/1] disabled:cursor-default`}>
             <div className="relative clip-path-hex flex items-center justify-center w-full h-full disabled:cursor-default" style={answer?.guessed ? {backgroundColor: "#c2f8ca"} : {backgroundColor: "#EAF4FF"}}>
                 <div className={`${textSize} font-bold text-center leading-none whitespace-nowrap overflow-hidden min-w-[25ch]`}>
                     {answer ? answer.text : index + 1}
