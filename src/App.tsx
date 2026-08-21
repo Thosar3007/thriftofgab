@@ -19,62 +19,45 @@ function App() {
 
     const [statusMessage, setStatusMessage] = useState("");
 
+    const colorModeLoad = localStorage.getItem("colorMode")
+
+    const [colorMode, setColorMode] = useState<string>(colorModeLoad ?? "light");
+
+    function colorModeToggle() {
+        const newMode = colorMode === "dark" ? "light" : "dark";
+        setColorMode(newMode);
+        
+        localStorage.setItem("colorMode",newMode);
+    }
+
     function hostGame() {
-        socket.emit("hostGame")
+        socket.emit("hostGame");
     }
 
     function joinGame(gameId:string) {
         const playerId = localStorage.getItem("playerId");
-        socket.emit("joinGame", gameId, playerId)
+        socket.emit("joinGame", gameId, playerId);
     }
 
-    // useEffect(() => {
-
-    //     socket.on("lobbyCreated", (gameId, playerId) => {
-
-    //         console.log("Lobby created:", gameId, playerId);
-
-    //         localStorage.setItem("playerId", playerId);
-
-    //     });
-
-    //     return () => {
-
-    //         socket.off("lobbyCreated");
-
-    //     };
-
-    // }, []);
-
     useEffect(() => {
-
         socket.on("joinSucceeded", ({ gameId, id }) => {
-
-            console.log("Join Succeeded", gameId, id)
-
+            console.log("Join Succeeded", gameId, id);
             localStorage.setItem("playerId", id);
-
             setMyPlayerId(id);
-
         });
 
         socket.on("joinFailed", () => {
-
             console.log("Room doesn't exist.");
-
         });
         
     return () => {
-
         socket.off("joinSucceeded");
         socket.off("joinFailed");
-
-    };
+        };
 
     }, []);
 
     useEffect(() => {
-
         socket.on("gameUpdated", (game: Game) => {
             setGame(game);
         });
@@ -87,8 +70,8 @@ function App() {
 
 
 return (
-    <div className="min-h-screen flex flex-col w-full justify-start pt-2 pb-4 px-5 bg-background text-navy">
-        <TitleBar title="Thrift of Gab" />
+    <div className={`min-h-screen flex flex-col w-full justify-start pt-2 pb-4 px-5 ${colorMode === "dark" ? "dark" : ""} bg-background text-navy`}>
+        <TitleBar title="Thrift of Gab" colorModeToggle={colorModeToggle} />
         {(!game) && <LandingScreen onHost={hostGame} onJoin={joinGame} />}
         {(game?.phase === "Lobby") && myPlayerId && <LobbyScreen game={game} playerId={myPlayerId} statusMessage={statusMessage} setStatusMessage={setStatusMessage} />}
         {(game?.phase === "Rounds") && myPlayerId && <GameScreen game={game} playerId={myPlayerId} statusMessage={statusMessage} setStatusMessage={setStatusMessage} />}

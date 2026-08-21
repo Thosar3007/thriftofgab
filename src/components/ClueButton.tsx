@@ -18,23 +18,43 @@ export default function ClueButton({
     hideMobile
 }: Props) {
 
+    // const getBackground = () => {
+
+    //     switch (state) {
+
+    //         case "selected":
+    //             return "#FFE55A";
+
+    //         case "pass":
+    //             return "#FF7A7A";
+
+    //         case "filled":
+    //             return "#FFF7DA";
+
+    //         default:
+    //             return index < 25
+    //                 ? "#EAF4FF"
+    //                 : "#FFEAEA";
+    //     }
+    // };
+
     const getBackground = () => {
 
         switch (state) {
 
             case "selected":
-                return "#FFE55A";
+                return "var(--color-selected)";
 
             case "pass":
-                return "#FF7A7A";
+                return "var(--color-pass)";
 
             case "filled":
-                return "#FFF7DA";
+                return "var(--color-filled)";
 
             default:
                 return index < 25
-                    ? "#EAF4FF"
-                    : "#FFEAEA";
+                    ? "var(--color-blue)"
+                    : "var(--color-red)";
         }
     };
 
@@ -51,7 +71,7 @@ export default function ClueButton({
         textSize = "text-xs";
 
     return (
-        <div className={`${hideMobile ? "hidden" : ""} clip-path-hex min-w-[60vw] md:min-w-auto md:flex items-center bg-black justify-center p-1 disabled:cursor-default`}>
+        <div className={`${hideMobile ? "hidden" : ""} clip-path-hex min-w-[60vw] text-navy md:min-w-auto md:flex items-center bg-black justify-center p-1 disabled:cursor-default`}>
             <button
                 type="button"
                 onClick={onClick}

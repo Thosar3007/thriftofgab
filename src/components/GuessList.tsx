@@ -47,7 +47,7 @@ export default function RecentGuesses({ round }: Props) {
 
                 {guesses.map((guess, index) => (
                     <div key={index} className="clip-path-hex flex items-center bg-black justify-center p-1 w-full aspect-[9.5/1] disabled:cursor-default">
-                        <div className="relative clip-path-hex flex items-center justify-center w-full disabled:cursor-default bg-[#FFE55A]">
+                        <div className="relative clip-path-hex flex items-center justify-center w-full disabled:cursor-default bg-filled">
                             <div className={"font-bold text-base text-center leading-none whitespace-wrap overflow-hidden p-1"}>
                                 {guess.text}
                             </div>

@@ -101,9 +101,9 @@ export default function GameScreen({game, playerId, statusMessage, setStatusMess
 
             <div className="flex flex-col justify-center items-center min-h-[10ch] gap-1 md:flex-row">
                 <div className="flex flex-1 w-min justify-end order-3 md:order-1">
-                    {game.currentRound.phase==="ReadyToScore" && game.hostId===playerId && <div className="flex w-fit h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-white shadow-md"><PokeButton onClick={clickScoreRound}>Score the Round!</PokeButton></div>}
-                    {game.currentRound.phase==="RoundScored" && game.hostId===playerId && <div className="flex w-fit h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-white shadow-md"><PokeButton onClick={clickNextRound}>{(game.roundNumber < game.players.length-1) ? "Start the Next Round!" : "Final Scores!"}</PokeButton></div>}
-                    {game.currentRound.phase==="Playing" && playerId===clueGiver.id && <div className="flex w-[10rem] h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-white shadow-md"><PokeButton onClick={passButton}>PASS</PokeButton></div>}
+                    {game.currentRound.phase==="ReadyToScore" && game.hostId===playerId && <div className="flex w-fit h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-background2 shadow-md"><PokeButton onClick={clickScoreRound}>Score the Round!</PokeButton></div>}
+                    {game.currentRound.phase==="RoundScored" && game.hostId===playerId && <div className="flex w-fit h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-background2 shadow-md"><PokeButton onClick={clickNextRound}>{(game.roundNumber < game.players.length-1) ? "Start the Next Round!" : "Final Scores!"}</PokeButton></div>}
+                    {game.currentRound.phase==="Playing" && playerId===clueGiver.id && <div className="flex w-[10rem] h-full align-items-right justify-end justify-self-end px-4 py-5.5 rounded-lg border border-dark bg-background2 shadow-md"><PokeButton onClick={passButton}>PASS</PokeButton></div>}
                 </div>
                 {(game.settings.useTypedGuesses || isClueGiver) && <div className="flex flex-1 order-2"><InputPanel
                     game={game}

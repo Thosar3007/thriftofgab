@@ -69,7 +69,7 @@ export default function InputPanel({
     return (
         <div className="w-min">
             <Panel>
-                <div className="h-full w-min flex flex-col gap-2 items-center justify-center md:flex-row">
+                <div className="h-full w-min flex flex-col gap-2 items-center text-[#1E3557] justify-center md:flex-row">
                     <div className="flex grow-1 items-center justify-center">{isClueGiver && <PokeButton onClick={resetClueOutput}>Clue Reset!</PokeButton>}</div>
                     <input
                         className="border-b border-1 rounded-lg p-2 bg-white grow-2"

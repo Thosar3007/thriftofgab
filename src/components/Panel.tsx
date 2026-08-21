@@ -10,7 +10,7 @@ export default function Panel({
 
     return (
 
-        <div className="flex flex-col h-full w-full rounded-lg border border-dark bg-white shadow-md justify-start">
+        <div className="flex flex-col h-full w-full rounded-lg border border-dark bg-background2 shadow-md justify-start">
 
             {title && (
                 <div className="flex max-h-12 justify-self-start items-center justify-center px-4 py-2 font-bold">

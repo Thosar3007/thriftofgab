@@ -48,7 +48,7 @@ export default function GameOverScreen({game, playerId, statusMessage, setStatus
         <div className="flex flex-col h-full w-full items-center justify-between p-4">
             <div className="flex flex-col w-full items-center justify-start gap-3">
                 <div className="flex min-w-[25rem] items-center justify-center rounded-lg border border-gold bg-gradient-to-r from-light via-dark to-light shadow-md shadow-slate-900/15 tracking-wide mb-3">
-                    <div className="flex min-h-[7rem] px-3 items-center justify-center font-bold -skew-x-25 text-5xl bg-[linear-gradient(-3deg,var(--color-gold),var(--color-gold),var(--color-background),var(--color-gold),var(--color-gold))] bg-clip-text text-transparent [-webkit-text-stroke:1px_navy]">
+                    <div className="flex min-h-[7rem] px-3 items-center justify-center font-bold -skew-x-25 text-5xl bg-[linear-gradient(-3deg,var(--color-gold),var(--color-gold),#F4F8FA,var(--color-gold),var(--color-gold))] bg-clip-text text-transparent [-webkit-text-stroke:1px_navy]">
                         {topPlayers.map((player, index) => (
                                 <span key={player.id}>{player.name}{!(index===topPlayers.length-1) ? " and " : " win"}{topPlayers.length>1 ? "" : "s"}!</span>
                             ))}

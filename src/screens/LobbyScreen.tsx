@@ -37,6 +37,11 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
         { label: "Actions", value: "actions" }
     ];
 
+    const fanCategories = [
+        { label: "Star Wars", value: "StarWars" },
+        { label: "Bridgerton", value: "Bridgerton" }
+    ];
+
     const handleCategoryChange = (categoryValue: string, isChecked: boolean) => {
 
         const updatedSettings = {
@@ -197,8 +202,8 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
             <div className="h-full md:row-span-3 md:col-span-2">
                 <Panel title="Settings">
                     <div className="flex flex-col justify-between w-full gap-2">
-                        <div className="flex flex-col gap-2 w-full md:flex-row ">
-                            <div className="flex flex-col flex-1 h-full justify-between">
+                        <div className="flex flex-col gap-2 w-full md:flex-row md:flex-wrap">
+                            <div className="flex flex-col flex-1 justify-between">
                                 <div className="flex flex-col h-fit">
                                     <Panel title="Pokemon Categories">
                                         <div className="flex flex-col w-fit gap-2 p-2">
@@ -236,25 +241,32 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
                                     </div>
                                 </Panel>
                             </div>
+                            <div className="flex flex-1 h-fit">
+                                <Panel title="Other Fan Categories">
+                                    <div className="flex flex-col gap-2 p-2">
+                                        {fanCategories.map((cat, index) => (
+                                            <div key={index} className="flex items-center gap-2">
+                                                <input
+                                                    type="checkbox"
+                                                    className="w-4 h-4 cursor-pointer"
+                                                    checked={game.settings.categories.includes(cat.value)}
+                                                    disabled={!isHost}
+                                                    onChange={(e) => handleCategoryChange(cat.value, e.target.checked)}
+                                                />
+                                                <span>{cat.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Panel>
+                            </div>
                         </div>
                         <div className="flex flex-col h-fit w-fit">
                             <Panel title="Game Mode">
-                                <div className="flex items-center justify-center gap-2 p-2">
-                                    
-                                        <div className="flex w-[25ch] items-center gap-2 p-2">
-                                            <input
-                                                type="checkbox"
-                                                className="w-4 h-4 cursor-pointer"
-                                                checked={game.settings.useTypedGuesses}
-                                                disabled={!isHost}
-                                                onChange={(e) => handleModeChange(e.target.checked)}
-                                            />
-                                            <span>Use Typed Guesses</span>
-                                        </div>
-                                        <div className="flex w-fit p-2">
-                                            When using typed guesses, everything is scored automatically. Without typed guesses, it is assumed that the clue giver can hear verbal guesses from the guessers. The clue giver will manually assign who guessed an answer correctly, and can penalize guessers who guess when they are not supposed to by right-clicking on their score card to subtract points.
-                                        </div>
-
+                                <div className="flex flex-col items-center justify-center gap-2 px-2 pb-2 md:grid md:grid-cols-[1fr_4fr] md:grid-rows-[min_min]">
+                                    <span className="flex gap-2 self-start items-center pt-2"><input type="radio" name="gameMode" value="typed" checked={game.settings.useTypedGuesses === true} disabled={!isHost} onChange={() => handleModeChange(true)} />Use Typed Guesses</span>
+                                    <p className="h-full items-center pt-2">When using typed guesses, everything is scored automatically.</p>
+                                    <span className="flex gap-2 self-start items-center pt-2"><input className="" type="radio" name="gameMode" value="voice" checked={game.settings.useTypedGuesses === false} disabled={!isHost} onChange={() => handleModeChange(false)} />Voice Mode</span>
+                                    <p className="h-full items-center pt-2">If using Voice Mode, it is assumed that the clue giver can hear verbal guesses from the guessers. The clue giver will manually assign who guessed an answer correctly, and can penalize guessers who guess when they are not supposed to by right-clicking on their score card to subtract points.</p>
                                 </div>
                             </Panel>
                         </div>
@@ -264,7 +276,7 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
             <div className="">
                 <Panel>
                     <div className="w-full flex flex-col items-center justify-center gap-2">
-                        <div className="flex">
+                        <div className="flex text-[#1E3557]">
                             <input
                                     className="w-[14rem] border-b border-1 bg-white rounded-lg p-2"
                                     placeholder="Pick Your Name And Color!"

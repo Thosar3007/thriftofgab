@@ -11,7 +11,33 @@
 
   --color-navy: #1E3557;
 
+  --color-blue: #EAF4FF;
+  --color-red: #FFEAEA;
+  --color-pass: #FF7A7A;
+  --color-selected: #FFE55A;
+  --color-filled: #FFF7DA;
+  
+
   --color-background: #F4F8FA;
+  --color-background2: #F2F3F1;
+
+  --color-button: #F4C542;
+  --color-button-light: #FFD966;
+}
+
+.dark {
+    --color-navy: #E8F0F5;
+    --color-background: #17202B;
+    --color-background2: #222222;
+
+    --color-button: #113333;
+    --color-button-light: #115533;
+
+    --color-blue: #2d5074;
+    --color-red: #712836;
+    --color-pass: #ad0808;
+    --color-selected: #93cc0e;
+    --color-filled: #a98f09;
 }
 
 @layer utilities {

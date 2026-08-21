@@ -2,17 +2,19 @@ import { useState } from "react";
 
 interface Props {
     title: string;
+    colorModeToggle: () => void;
 }
 
 export default function TitleBar({
-    title
+    title,
+    colorModeToggle
 }: Props) {
 
     const [showHelp, setShowHelp] = useState(false);
 
     return (
 
-        <div className="flex w-full items-center justify-center rounded-lg border border-gold bg-gradient-to-r from-light via-dark to-light shadow-md shadow-slate-900/15 tracking-wide">
+        <div className="flex w-full items-center justify-center rounded-lg border border-gold bg-gradient-to-r from-light via-dark to-light shadow-md shadow-slate-900/15 tracking-wide text-[#1E3557]">
             <div>
                 {showHelp && <div className="z-20 inset-0 fixed top-0 w-auto h-auto md:h-min md:m-auto md:max-w-[90vw] flex items-center justify-center text-center border-1 border-dark rounded-lg bg-gold">
                     <div className="w-full md:w-auto h-full flex flex-col border-5 border-gold rounded-lg bg-dark text-white font-bold md:p-5">
@@ -48,10 +50,11 @@ export default function TitleBar({
                 </div>}
             </div>
             {title && (
-                <div className="flex items-center justify-center font-bold -skew-x-25 text-2xl md:text-3xl bg-[linear-gradient(-3deg,var(--color-gold),var(--color-gold),var(--color-background),var(--color-gold),var(--color-gold))] bg-clip-text text-transparent [-webkit-text-stroke:1px_navy]">
+                <div className="flex items-center justify-center font-bold -skew-x-25 text-2xl md:text-3xl bg-[linear-gradient(-3deg,var(--color-gold),var(--color-gold),#F4F8FA,var(--color-gold),var(--color-gold))] bg-clip-text text-transparent [-webkit-text-stroke:1px_navy]">
                     {title}
                 </div>
             )}
+            <div onClick={()=>colorModeToggle()} className="cursor-pointer absolute flex h-[1.2rem] md:h-[1.7rem] border rounded-full aspect-square bg-gold justify-center items-center text-sm md:text-lg font-bold right-16">☾</div>
             <div onClick={()=>setShowHelp(!showHelp)} className="cursor-pointer absolute flex h-[1.2rem] md:h-[1.7rem] border rounded-full aspect-square bg-gold justify-center items-center text-sm md:text-lg font-bold right-8">?</div>
         </div>
 

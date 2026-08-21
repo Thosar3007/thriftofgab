@@ -17,7 +17,7 @@ export default function ClueOutputZone({ game }: Props) {
 
         <Panel title="Clue Output">
             <div className="clip-path-hex flex items-center bg-black justify-center p-1 w-full h-full disabled:cursor-default">
-                <div className="relative clip-path-hex flex items-center justify-center w-full h-full min-h-15 disabled:cursor-default bg-[#FFF999]">
+                <div className="relative clip-path-hex flex items-center justify-center w-full h-full min-h-15 disabled:cursor-default bg-selected">
                     <div className={"font-bold text-xl text-center leading-8 whitespace-wrap overflow-hidden"}>
                         {clueTexts.join(" ")}
                     </div>

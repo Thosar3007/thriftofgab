@@ -7,6 +7,8 @@ import objects from "../data/objects.json";
 import people from "../data/people.json";
 import places from "../data/places.json";
 import actions from "../data/actions.json";
+import starwars from "../data/starwars.json";
+import bridgerton from "../data/bridgerton.json";
 import type { AnswerDefinition } from "../types/AnswerDefinition";
 
 export function loadAnswers(categories: string[]): AnswerDefinition[] {
@@ -49,5 +51,13 @@ export function loadAnswers(categories: string[]): AnswerDefinition[] {
         answers.push(...places);
     }	
 
+	if (categories.includes("StarWars")) {
+        answers.push(...starwars);
+    }
+
+	if (categories.includes("Bridgerton")) {
+        answers.push(...bridgerton);
+    }
+	
     return answers;
 }
