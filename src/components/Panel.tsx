@@ -19,7 +19,7 @@ export default function Panel({
             )}
 
             {children && (
-                <div className="flex-1 min-h-0 flex px-4 py-2">
+                <div className="flex-1 min-h-0 flex px-4 py-2 justify-center">
                     {children}
                 </div>
             )}

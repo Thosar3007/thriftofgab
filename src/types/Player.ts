@@ -1,6 +1,6 @@
 export interface Player {
 	
-	socketid: string;
+	socketid?: string;
 
     id: string;
 

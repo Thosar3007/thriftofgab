@@ -25,7 +25,12 @@ const io = new Server(httpServer);
 const games = new Map<string, Game>();
 const playerGames = new Map<string, string>();
 const sockets = new Map<string, Socket>();
+const hostRecoveryTimers = new Map<string, NodeJS.Timeout>();
+
 const engine = new GameEngine();
+
+
+
 
 function generateRoomCode(): string {
 
@@ -135,13 +140,101 @@ function addTestPlayers(game: Game) {
 
 function destroyGame(game: Game) {
 
+    const timer = hostRecoveryTimers.get(game.id);
+
+    if (timer) {
+        clearTimeout(timer);
+        hostRecoveryTimers.delete(game.id);
+    }
+
     for (const player of game.players) {
 
-        playerGames.delete(player.id);
+        if (player.socketId) {
+            playerGames.delete(player.socketId);
+        }
 
     }
 
     games.delete(game.id);
+
+}
+
+function startHostRecoveryTimer(game: Game) {
+
+    if (hostRecoveryTimers.has(game.id)) {
+        return;
+    }
+
+    console.log(
+        `Host ${game.hostId} disconnected from ${game.id}. ` +
+        `Starting 10-minute recovery timer.`
+    );
+
+    const timer = setTimeout(() => {
+
+        hostRecoveryTimers.delete(game.id);
+
+        const currentGame = games.get(game.id);
+
+        if (!currentGame) {
+            return;
+        }
+
+        const currentHost = currentGame.players.find(
+            player => player.id === currentGame.hostId
+        );
+
+        // Host came back during the grace period.
+        if (currentHost?.connected) {
+            return;
+        }
+
+        const connectedPlayers = currentGame.players.filter(
+            player => player.connected
+        );
+
+        if (connectedPlayers.length === 0) {
+
+            io.to(currentGame.id).emit("gameClosed");
+
+            destroyGame(currentGame);
+
+            return;
+        }
+
+        const newHost =
+            connectedPlayers[
+                Math.floor(Math.random() * connectedPlayers.length)
+            ];
+
+        currentGame.hostId = newHost.id;
+
+        for (const player of currentGame.players) {
+            player.isHost = player.id === newHost.id;
+        }
+
+        console.log(
+            `Player ${newHost.id} is now host of ${currentGame.id}.`
+        );
+
+        io.to(currentGame.id).emit("gameUpdated", currentGame);
+
+    }, 10 * 60 * 1000);
+
+    hostRecoveryTimers.set(game.id, timer);
+}
+
+
+function cancelHostRecoveryTimer(game: Game) {
+
+    const timer = hostRecoveryTimers.get(game.id);
+
+    if (!timer) {
+        return;
+    }
+
+    clearTimeout(timer);
+    hostRecoveryTimers.delete(game.id);
 
 }
 
@@ -168,6 +261,8 @@ io.on("connection", socket => {
 			color: "#FF0000",
 
 			score: 0,
+			
+			connected: true,
 			
 			isHost: true
 		};
@@ -216,12 +311,12 @@ io.on("connection", socket => {
 			return;
 		}
 		
-		let player: Player = game.players.find(p => p.id === playerId);
-		
+		let player: Player | undefined = game.players.find(p => p.id === playerId);
+
 		if (player?.socketId) {
 			playerGames.delete(player.socketId);
 		}
-		
+
 		if (player) {
 
 			player.socketId = socket.id;
@@ -230,7 +325,11 @@ io.on("connection", socket => {
 			playerGames.set(socket.id, gameId);
 
 			socket.join(gameId);
-			
+
+			if (player.id === game.hostId) {
+				cancelHostRecoveryTimer(game);
+			}
+
 			const id = player.id;
 
 			socket.emit("joinSucceeded", { gameId, id });
@@ -408,34 +507,123 @@ io.on("connection", socket => {
 		}
 	);
 	
+	socket.on(
+		"kickPlayer",
+		(
+			targetPlayerId: string,
+			callback: (result: GameResult) => void
+		) => {
+
+			const game = getGameForSocket(socket.id);
+
+			if (!game) {
+				callback({
+					success: false,
+					message: "You are not in a game."
+				});
+				return;
+			}
+
+			const host = getPlayerForSocket(socket.id);
+
+			if (!host) {
+				callback({
+					success: false,
+					message: "Player not found."
+				});
+				return;
+			}
+
+			if (game.hostId !== host.id) {
+				callback({
+					success: false,
+					message: "Only the host can kick players."
+				});
+				return;
+			}
+
+			if (targetPlayerId === host.id) {
+				callback({
+					success: false,
+					message: "You cannot kick yourself."
+				});
+				return;
+			}
+
+			const target = game.players.find(
+				player => player.id === targetPlayerId
+			);
+
+			if (!target) {
+				callback({
+					success: false,
+					message: "Player not found."
+				});
+				return;
+			}
+
+			if (target.socketId) {
+
+				const targetSocket = sockets.get(target.socketId);
+
+				if (targetSocket) {
+					targetSocket.emit("kicked");
+					targetSocket.disconnect(true);
+				}
+
+				playerGames.delete(target.socketId);
+			}
+
+			game.players = game.players.filter(
+				player => player.id !== targetPlayerId
+			);
+
+			if (game.clueGiverOrder) {
+				game.clueGiverOrder =
+					game.clueGiverOrder.filter(
+						id => id !== targetPlayerId
+					);
+			}
+
+			io.to(game.id).emit("gameUpdated", game);
+
+			callback({
+				success: true
+			});
+
+		}
+	);
+	
 	socket.on("disconnect", () => {
 
 		const game = getGameForSocket(socket.id);
 
+		sockets.delete(socket.id);
+
 		if (!game) {
 			return;
 		}
-		
+
 		const player = getPlayerForSocket(socket.id);
-		
-		if (!player) return;
-		
-		if (player?.isHost) {
 
-			io.to(game.id).emit("gameClosed");
-
-			destroyGame(game);
-
+		if (!player) {
+			playerGames.delete(socket.id);
 			return;
 		}
 
-		engine.disconnectPlayer(game, player.id)
+		console.log(
+			`Player ${player.id} disconnected from game ${game.id}.`
+		);
 
-		playerGames.delete(player.socketId);
+		playerGames.delete(socket.id);
+
+		engine.disconnectPlayer(game, player.id);
+
+		if (player.id === game.hostId) {
+			startHostRecoveryTimer(game, player.id);
+		}
 
 		io.to(game.id).emit("gameUpdated", game);
-		
-		sockets.delete(socket.id);
 
 	});
 

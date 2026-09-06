@@ -23,10 +23,10 @@ export default function LandingScreen({
                 <div className="flex flex-col grow-1 w-[12rem] items-center p-3 gap-1">
                     <PokeButton onClick={() => onJoin(text)}>Join a Game!</PokeButton>
                     <input
-                        className="border-b border-1 rounded-lg p-2 w-full bg-white"
+                        className="border-b border-1 rounded-lg p-2 w-full bg-white text-black"
                         placeholder="Game Code Here!"
                         value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={(e) => setText(e.target.value.toUpperCase())}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                                 {onJoin}

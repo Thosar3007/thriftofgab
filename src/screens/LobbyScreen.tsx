@@ -320,7 +320,7 @@ export default function LobbyScreen({game, playerId, statusMessage, setStatusMes
                 <Panel>
                     <div className="flex flex-col gap-1 justify-start items-center w-full">
                         {game.players.map(player => (
-                            <ScoreCard player={player} setStatusMessage={setStatusMessage} scoreOverrideActive={false} />
+                            <ScoreCard player={player} setStatusMessage={setStatusMessage} scoreOverrideActive={false} isHost={isHost} />
                         ))}
                     </div>
                 </Panel>

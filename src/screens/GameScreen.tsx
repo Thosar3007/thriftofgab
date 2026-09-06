@@ -26,7 +26,8 @@ export default function GameScreen({game, playerId, statusMessage, setStatusMess
     }
     const clueGiver = getPlayer(game, game.currentRound.clueGiverId);
 
-    const isClueGiver = (playerId===clueGiver.id)
+    const isClueGiver = (playerId === clueGiver.id)
+    const isHost = (playerId === game.hostId)
 
     async function passButton() {
 
@@ -74,23 +75,34 @@ export default function GameScreen({game, playerId, statusMessage, setStatusMess
     return (
         <div className="flex h-full min-h-0 p-3 gap-1 flex-col">
             <div className="flex flex-col min-h-[8rem] gap-3 px-10 md:flex-row md:max-h-[12rem] md:h-[18vh] md:gap-10">
-                <div className="flex flex-col h-[8rem] max-h-full self-center items-center justify-center gap-1">
-                    <div className="text-xl color-dark font-bold underline">Clue Giver</div>
-                    <Badge player={clueGiver}/>
+                <div className="flex flex-col h-[10rem] max-h-full self-center items-center justify-center text-center gap-1">
+                    <div className="h-min">
+                        <Panel>
+                            <div className="flex w-full items-center justify-center justify-self-center font-bold">
+                                Room Code: {game.id}
+                            </div>
+                        </Panel>
+                    </div>
+                    <Panel>
+                        <div className="flex flex-col">
+                            <div className="text-xl color-dark font-bold underline">Clue Giver</div>
+                            <Badge player={clueGiver}/>
+                        </div>
+                    </Panel>
                 </div>
                 <div className="flex min-h-0 grow-5 order-3 md:order-2"><ClueOutputZone game={game} /></div>
                 {game.settings.useTypedGuesses ? <div className="flex min-h-0 grow-1 order-2 md:order-3"><GuessList round={game.currentRound} /></div> : ""}
             </div>
 
             <div className="flex-1 flex flex-col gap-2 w-full justify-center items-center md:flex-row">
-                <div className={`${!isClueGiver ? "hidden" : ""} grow-1 order-2 md:flex md:order-1`}>
+                <div className="grow-1 order-2 md:flex md:order-1">
                     <ClueBank
                         game={game}
                         playerId={playerId}
                         setStatusMessage={setStatusMessage}
                     />
                 </div>
-                <div className="flex basis-0 order-1 w-full md:w-auto md:order-2">
+                <div className= {`${!isClueGiver ? "hidden" : ""} flex basis-0 order-1 w-full md:w-auto md:order-2 md:block`}>
                     <AnswerList 
                         game={game}
                         isClueGiver={isClueGiver}

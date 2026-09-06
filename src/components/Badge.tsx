@@ -15,12 +15,12 @@ export default function Badge({
 
     return (
 
-        <div className="relative flex min-h-0 h-full rounded-full bg-black p-[1px] shadow-md aspect-square">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-white p-[1px] aspect-square">
+        <div className="col-start-1 row-start-1 relative flex min-h-0 h-full rounded-full bg-black p-[1px] shadow-md aspect-square w-min self-center">
+            <div className="flex h-full items-center justify-center rounded-full bg-white p-[1px] aspect-square">
                 {player.avatar ? <img className="h-full w-full rounded-full aspect-square border-b border-1" src={player.avatar} /> : 
                 <svg
                     viewBox="0 0 100 100"
-                    className="h-full w-full rounded-full aspect-square select-none"
+                    className="h-full rounded-full aspect-square select-none"
                 >
                     <circle
                         cx="50"
